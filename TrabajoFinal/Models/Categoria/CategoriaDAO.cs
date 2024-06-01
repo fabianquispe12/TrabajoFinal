@@ -60,5 +60,74 @@ namespace TrabajoFinal.Models.Categoria
             Console.WriteLine(categorias);
             return categorias;
         }
+
+
+        public int AgregarDetalleCategoria(Categoria categoria) {
+            int m = 0;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion"].ConnectionString)) {
+                con.Open();
+                SqlTransaction trans = con.BeginTransaction();
+
+                try
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.Transaction = trans;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "agregarDetalleCategoria";
+                    cmd.Parameters.AddWithValue("@cod", categoria.codigo_categoria);
+                    cmd.Parameters.AddWithValue("@desc", categoria.descripcion);
+                    cmd.Parameters.AddWithValue("@imagen", categoria.imagen);
+
+                    m = cmd.ExecuteNonQuery();
+                    trans.Commit();
+                }catch(Exception er)
+                {
+                    trans.Rollback();
+                }
+            
+                return m;
+            }
+
+            
+        }
+
+
+        public List<Categoria> ListarDetalleCategorias() {
+            List<Categoria> categorias = new List<Categoria> ();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion"].ConnectionString))
+            {
+                con.Open();
+
+                try
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "ListarCategoriaDetalle";
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    if (dr.HasRows) {
+                        while (dr.Read())
+                        {
+                            Categoria cat = new Categoria();
+
+                            cat.codigo_categoria = dr["codigo_categoria"].ToString();
+                            cat.categoria = dr["categoria"].ToString();
+                            cat.descripcion = dr["descripcion"].ToString();
+                            cat.imagen = (byte[]) dr["imagen"];
+
+                            categorias.Add(cat);
+                        }
+                        
+                    }
+
+                }catch(Exception er)
+                {
+
+                }
+
+                return categorias;
+            }
+        }
     }
 }

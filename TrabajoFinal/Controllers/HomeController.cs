@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TrabajoFinal.Models.Categoria;
 
 namespace TrabajoFinal.Controllers
 {
     public class HomeController : Controller
     {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
         public ActionResult Index()
         {
             return View();
@@ -26,5 +28,19 @@ namespace TrabajoFinal.Controllers
 
             return View();
         }
+
+        public ActionResult Categorias()
+        {
+            ViewBag.Message = "Categorias";
+
+            IEnumerable<Categoria> categorias = categoriaDAO.ListarDetalleCategorias();
+            ViewBag.Categorias = categorias;
+            return View();
+        }
+
+        //public ActionResult Categoria(string codigo_categoria) {
+        
+        
+        //}
     }
 }

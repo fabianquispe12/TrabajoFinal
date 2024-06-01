@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using TrabajoFinal.Models;
 using TrabajoFinal.Models.Categoria;
@@ -12,6 +13,7 @@ namespace TrabajoFinal.Controllers
 {
     public class ProductoController : Controller
     {
+        
         // GET: Producto
         public ActionResult Index()
         {
@@ -35,28 +37,36 @@ namespace TrabajoFinal.Controllers
 
         // POST: Producto/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FormCollection collection, HttpPostedFileBase imagen)
         {
             try
             {
-                Producto producto = new Producto();
                 ProductoDAO productoDAO = new ProductoDAO();
+                Producto producto = new Producto();
+                
+                WebImage webImage = new WebImage(imagen.InputStream);
+                byte[] imagenBit = webImage.GetBytes();
                 producto.producto = collection["producto"];
                 producto.descripcion = collection["descripcion"];
                 producto.precio = Convert.ToDecimal(collection["precio"]);
                 producto.stock = Convert.ToInt32(collection["stock"]);
-                byte[] data;
-                Console.WriteLine(collection["imagen"]);
-                    char state = (collection["estado"] == "true") ? '1' : '0';
-                producto.estado = state;
+                producto.imagen = imagenBit;
+                producto.codigo_usuario = 2;
                 producto.codigo_categoria = collection["codigo_categoria"];
-                producto.codigo_usuario = Convert.ToInt32(collection["codigo_usuario"]);
+                
 
                 int registrado =  productoDAO.RegistrarProducto(producto);
+                if(registrado == 1)
+                {
+                return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Create");
+                }
 
                
 
-                return RedirectToAction("Index");
             }
             catch
             {

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/LayoutView.cshtml";
+}
+
+<h2>Create Categoria Detalle</h2>
+@using (@Html.BeginForm("Create", "Categoria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="/tu-ruta-de-destino" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="selectBox">Selecciona una opción:</label>
+                    <select class="form-control" name="codigo_categoria" id="selectBox">
+                        <option value="">Seleccione una opción</option>
+                       @foreach (var car in ViewBag.Categorias)
+                       {
+                        <option value="@car.codigo_categoria">@car.categoria</option>
+                       }
+                       
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="texto">Ingresa un texto:</label>
+                    <textarea class="form-control" name="descripcion" id="texto" cols="30" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Selecciona una imagen:</label>
+                    <input type="file" class="form-control-file" name="imagen" id="imagen">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}
+

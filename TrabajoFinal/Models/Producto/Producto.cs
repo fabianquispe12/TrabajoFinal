@@ -13,10 +13,8 @@ namespace TrabajoFinal.Models.Producto
         public string descripcion { get; set; }
         public decimal precio { get; set; }
         public int stock {  get; set; }
-        public string imagen { get; set; }
+        public byte[] imagen { get; set; }
 
-        public HttpPostedFileBase Image { get; set; }
-        public char estado {  get; set; }
         public string codigo_categoria { get; set; }
 
         public string categoria { get; set; }

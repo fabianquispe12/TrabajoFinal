@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/LayoutView.cshtml";
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #c0c0c0, #ffffff);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-container {
+        max-width: 380px;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .login-form {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    }
+
+        .login-form h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #ddd;
+        border-radius: 0;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #4d4dff;
+        }
+
+    .btn-custom {
+        background-color: #4d4dff;
+        border-color: #4d4dff;
+        color: #fff;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-custom:hover {
+            background-color: #333;
+            border-color: #333;
+        }
+
+    .text-decoration-none:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-sm p-4 col-12 col-md-6 col-lg-4">
+            <h1 class="text-center mb-4">Iniciar sesión</h1>
+            <form>
+                <div class="mb-3">
+                    <strong><label for="username" class="form-label">Nombre de usuario</label></strong>
+                    <input type="text" class="form-control w-100" id="username" placeholder="Ingresa tu nombre de usuario">
+                </div>
+                <div class="mb-3">
+                    <strong> <label for="password" class="form-label">Contraseña</label></strong>
+                    <input type="password" class="form-control w-100" id="password" placeholder="Ingresa tu contraseña">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me">
+                    <label class="form-check-label" for="remember-me">Recuérdame</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-4">Iniciar sesión</button>
+            </form>
+            <div class="text-center mt-2">
+                <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="text-center mt-3">
+                ¿Aún no tienes una cuenta? <a href="#" class="text-decoration-none">Crea una cuenta</a>
+            </div>
+        </div>
+    </div>
+

@@ -51,5 +51,40 @@ namespace TrabajoFinal.Models.Usuario
             }
             return usuarios;
         }
+
+
+        public Usuario ValidarUsuario(string user,string pass)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion"].ConnectionString))
+            {
+                con.Open();
+                SqlTransaction tran = con.BeginTransaction();
+
+               Usuario usuario = new Usuario();
+                try
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.Transaction = tran;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "ValidarUsuario";
+                    cmd.Parameters.AddWithValue("@user", user);
+                    cmd.Parameters.AddWithValue("@pass", pass);
+
+                    SqlDataReader dt = cmd.ExecuteReader();
+                    dt.Read();
+                    usuario.codigo_usuario = Convert.ToInt32(dt["codigo_usuario"]);
+                    usuario.nombre = dt["nombre"].ToString();
+                    usuario.ap_paterno = dt["ap_paterno"].ToString();
+                    usuario.ap_materno = dt["ap_materno"].ToString();
+                    usuario.celular = dt["celular"].ToString();
+                    usuario.codigo_rol = dt["usuario_codigo_rol"].ToString();
+                }
+                catch (Exception er)
+                {
+                   
+                }
+                return usuario;
+            }
+        }
     }
 }
