@@ -1,0 +1,67 @@
+@{
+    ViewBag.Title = "Resultado";
+}
+
+@functions {
+    private string ObtenerMotivoRandom()
+    {
+        // Lista de posibles motivos
+        string[] motivos = {
+            "Error de conexión con el servidor de pagos",
+            "Fondos insuficientes en la tarjeta",
+            "Problemas de autenticación",
+            "Error interno en el proceso de pago",
+            "Tarjeta de crédito rechazada",
+            "Error de procesamiento"
+        };
+
+        // Generar un índice aleatorio para seleccionar un motivo de la lista
+        Random random = new Random();
+        int indice = random.Next(motivos.Length);
+
+        return motivos[indice];
+    }
+}
+
+<html lang="es">
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            @{
+                if ((bool)ViewData["Status"])
+                {
+                    <br />
+                    <h1 class="text-success">¡Gracias por su compra!</h1>
+                    <i class="far fa-check-circle fa-9x text-success"></i>
+                    <h2 class="text-success"> Su pago fue realizado con éxito</h2>
+                    <h4> ID de Transacción : @ViewData["IdTransaccion"]</h4>
+                    <br />
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver a la tienda</a>
+                }
+                else
+                {
+                    <br />
+                    <h1 class="text-danger">Lo sentimos...</h1>
+                    <i class="fas fa-exclamation-circle fa-9x text-danger"></i>
+                    <h2 class="text-danger"> Su pago no fue realizado</h2>
+                    <h5>Razón: @ObtenerMotivoRandom()</h5>
+                    <br />
+                    <a href="@Url.Action("Index","Home")" class="btn btn-primary">Volver a la tienda</a>
+                }
+            }
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.js"></script>
+</body>
+</html>
